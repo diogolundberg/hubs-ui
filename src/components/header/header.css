@@ -1,0 +1,25 @@
+.top {
+  background-color: blue;
+  height: 1px;
+}
+
+.header {
+  background-color: blue;
+  height: 60px;
+  line-height: 60px;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  position: sticky;
+  top: 0;
+  font-weight: 700;
+  transition: background-color 0.2s ease-out;
+}
+
+.sticky {
+  background-color: red;
+}
+
+.something {
+  height: 200vh;
+}
