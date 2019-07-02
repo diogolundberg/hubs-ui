@@ -1,7 +1,8 @@
-import React from "react";
-import "./list.css";
+import React from 'react';
+import './list.css';
 
 export function List({ className, columns, data, columnClick }) {
+  const { loading } = data;
   const tds = (item, i) => {
     return columns.map(column => {
       const key = column.accessor;
@@ -11,24 +12,37 @@ export function List({ className, columns, data, columnClick }) {
           key={`${i}${key}`}
         >
           {item[key]}
-        </td >
+        </td>
       );
     });
-  }
+  };
 
   const header = columns.map(column => {
     const key = column.accessor;
-    return <th onClick={() => columnClick(key)} key={key}>{column.header}</th>;
+    return (
+      <th onClick={() => columnClick(key)} key={key}>
+        {column.header}
+      </th>
+    );
   });
 
-  const rows = data.map((item, i) => <tr key={i}>{tds(item, i)}</tr>);
+  let rows = [];
+  if (!loading) {
+    rows = data.map((item, i) => <tr key={i}>{tds(item, i)}</tr>);
+  }
 
   return (
-    <table className={className}>
-      <thead>
-        <tr>{header}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <>
+      {loading ? (
+        <div>loading</div>
+      ) : (
+        <table className={className}>
+          <thead>
+            <tr>{header}</tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      )}
+    </>
   );
-};
+}
