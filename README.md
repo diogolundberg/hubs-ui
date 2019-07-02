@@ -1,4 +1,4 @@
-# 📦 boilerplate.it
+# 🚚 Cargo Hubs
 
 ### Requirements
 

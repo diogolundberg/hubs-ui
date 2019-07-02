@@ -1,11 +1,27 @@
 import React from "react";
 import "./list.css";
 
-export const List = ({ className, columns, data }) => {
-  const header = columns.map(column => <th key={column}>{column}</th>);
-  const itemData = (item, i) =>
-    columns.map(column => <td key={`${i}${column}`}>{item[column]}</td>);
-  const rows = data.map((item, i) => <tr key={i}>{itemData(item, i)}</tr>);
+export function List({ className, columns, data, columnClick }) {
+  const tds = (item, i) => {
+    return columns.map(column => {
+      const key = column.accessor;
+      return (
+        <td
+          style={{ maxWidth: column.width, width: column.width }}
+          key={`${i}${key}`}
+        >
+          {item[key]}
+        </td >
+      );
+    });
+  }
+
+  const header = columns.map(column => {
+    const key = column.accessor;
+    return <th onClick={() => columnClick(key)} key={key}>{column.header}</th>;
+  });
+
+  const rows = data.map((item, i) => <tr key={i}>{tds(item, i)}</tr>);
 
   return (
     <table className={className}>
