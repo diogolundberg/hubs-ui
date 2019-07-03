@@ -6,22 +6,16 @@ function App() {
   const columns = [
     { header: 'Country', accessor: 'country_id' },
     { header: 'Location', accessor: 'location' },
-    { header: 'Name', accessor: 'name', width: 200 },
+    { header: 'Name', accessor: 'name', width: 300 },
     { header: 'Functions', accessor: 'function' },
   ];
-  const [query, params, setParams] = useQuery();
+  const [query, params, setParams] = useQuery({ page: 1 });
   const [hubs] = useFetch(`http://localhost:9292/hubs?${query}`);
 
   const filter = e => setParams({ ...params, [e.target.name]: e.target.value });
   const clearFilters = () => setParams({});
   const loadMore = _ => setParams({ ...params, page: params.page + 1 });
-  const sort = column => {
-    setParams(params => {
-      const direction = params.direction === 'desc' ? 'asc' : 'desc';
-      if (params.sort === column) return { ...params, direction: direction };
-      return { ...params, sort: column };
-    });
-  };
+  const sortHandler = sort => setParams({ ...params, ...sort });
 
   return (
     <>
@@ -55,7 +49,7 @@ function App() {
       <br />
       <button onClick={() => clearFilters()}>reset</button>
       <button onClick={() => loadMore()}>load more</button>
-      <List columns={columns} data={hubs} columnClick={sort} />
+      <List columns={columns} data={hubs} sortHandler={sortHandler} />
     </>
   );
 }
