@@ -13,7 +13,7 @@ function App() {
   const [hubs] = useFetch(`http://localhost:9292/hubs?${query}`);
 
   const filter = e => setParams({ ...params, [e.target.name]: e.target.value });
-  const clearFilters = () => setParams({});
+  const clearFilters = () => setParams({ page: 1 });
   const changeParams = change => setParams({ ...params, ...change });
   const loadMore = _ => setParams({ ...params, page: params.page + 1 });
 
