@@ -1,9 +1,0 @@
-td {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.active {
-  background-color: blue;
-}

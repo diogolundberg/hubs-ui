@@ -1,12 +1,12 @@
 import React from 'react';
-import { List } from './components';
+import { Table, TextFilter } from './components';
 import { useFetch, useQuery } from './hooks';
 
 function App() {
   const columns = [
     { header: 'Country', accessor: 'country_id' },
     { header: 'Location', accessor: 'location' },
-    { header: 'Name', accessor: 'name', width: 300 },
+    { header: 'Name', accessor: 'name', width: 200 },
     { header: 'Functions', accessor: 'function' },
   ];
   const [query, params, setParams] = useQuery({ page: 1 });
@@ -14,26 +14,14 @@ function App() {
 
   const filter = e => setParams({ ...params, [e.target.name]: e.target.value });
   const clearFilters = () => setParams({});
+  const changeParams = change => setParams({ ...params, ...change });
   const loadMore = _ => setParams({ ...params, page: params.page + 1 });
-  const sortHandler = sort => setParams({ ...params, ...sort });
 
   return (
     <>
-      <label>
-        Country
-        <input type="text" name="country" onChange={event => filter(event)} />
-      </label>{' '}
-      <br />
-      <label>
-        Location
-        <input type="text" name="location" onChange={event => filter(event)} />
-      </label>
-      <br />
-      <label>
-        Name
-        <input type="text" name="name" onChange={event => filter(event)} />
-      </label>
-      <br />
+      <TextFilter name="country" label="Country" handler={changeParams} />
+      <TextFilter name="location" label="Location" handler={changeParams} />
+      <TextFilter name="name" label="Name" handler={changeParams} />
       <select name="function[]" onChange={event => filter(event)}>
         <option value="0">Function not known, to be specified</option>
         <option value="1">Port, as defined in Rec 16</option>
@@ -49,7 +37,7 @@ function App() {
       <br />
       <button onClick={() => clearFilters()}>reset</button>
       <button onClick={() => loadMore()}>load more</button>
-      <List columns={columns} data={hubs} sortHandler={sortHandler} />
+      <Table columns={columns} data={hubs} sortHandler={changeParams} />
     </>
   );
 }

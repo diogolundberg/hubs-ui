@@ -1,2 +1,2 @@
-export * from "./useFetch";
-export * from "./useQuery";
+export * from './fetch';
+export * from './query';
