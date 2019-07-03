@@ -9,8 +9,8 @@ function App() {
     { header: 'Name', accessor: 'name', width: 200 },
     { header: 'Functions', accessor: 'function' },
   ];
-  const [query, params, setParams] = useQuery({ page: 1, size: 40 });
-  const [data] = useFetch(`http://localhost:9292/hubs?${query}`);
+  const [query, params, setParams] = useQuery();
+  const [hubs] = useFetch(`http://localhost:9292/hubs?${query}`);
 
   const filter = e => setParams({ ...params, [e.target.name]: e.target.value });
   const clearFilters = () => setParams({});
@@ -28,15 +28,18 @@ function App() {
       <label>
         Country
         <input type="text" name="country" onChange={event => filter(event)} />
-      </label>
+      </label>{' '}
+      <br />
       <label>
         Location
         <input type="text" name="location" onChange={event => filter(event)} />
       </label>
+      <br />
       <label>
         Name
         <input type="text" name="name" onChange={event => filter(event)} />
       </label>
+      <br />
       <select name="function[]" onChange={event => filter(event)}>
         <option value="0">Function not known, to be specified</option>
         <option value="1">Port, as defined in Rec 16</option>
@@ -49,14 +52,10 @@ function App() {
         <option value="8">Inland Port</option>
         <option value="B">Border Crossing</option>
       </select>
+      <br />
       <button onClick={() => clearFilters()}>reset</button>
       <button onClick={() => loadMore()}>load more</button>
-      <List
-        className="center"
-        columns={columns}
-        data={data}
-        columnClick={sort}
-      />
+      <List columns={columns} data={hubs} columnClick={sort} />
     </>
   );
 }

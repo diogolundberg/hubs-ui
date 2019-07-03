@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useQuery(defaultParams) {
+export function useQuery(defaultParams = {}) {
   const [query, setQuery] = useState('');
   const [params, setParams] = useState(defaultParams);
 
