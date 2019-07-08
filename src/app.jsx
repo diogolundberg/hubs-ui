@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectFilter, Table, TextFilter } from './components';
+import { MultiSelect, SelectFilter, Table, TextFilter } from './components';
 import { useFetch, useQuery } from './hooks';
 
 function App() {
@@ -21,7 +21,16 @@ function App() {
   return (
     <>
       <SelectFilter name="country" data={countries} handler={changeParams} />
-      <SelectFilter name="function" data={functions} handler={changeParams} />
+      <MultiSelect
+        label="Functions"
+        placeholder="Pick some"
+        options={[
+          { value: 'Rock', name: 'Rock' },
+          { value: 'Paper', name: 'Paper' },
+          { value: 'Scissors', name: 'Scissors' },
+        ]}
+        multiple
+      />
       <TextFilter name="name" label="Name" handler={changeParams} />
       <button onClick={() => clearFilters()}>reset</button>
       <button onClick={() => loadMore()}>load more</button>
